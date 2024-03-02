@@ -17,9 +17,6 @@ export class TokenVerificationMiddleware implements NestMiddleware {
         });
       }
       const jwtPayload = jwtDecode(bearerToken);
-      console.log(jwtPayload['id']);
-      console.log(jwtPayload['role']);
-      console.log(jwtPayload);
       if (!jwtPayload['id'] || !jwtPayload['role']) {
         return res.status(HttpStatus.NOT_FOUND).json({
           statusCode: HttpStatus.UNAUTHORIZED,

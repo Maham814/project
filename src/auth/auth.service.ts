@@ -26,7 +26,6 @@ export class AuthService {
     }
 
     const password = this.generateRandomPassword();
-    console.log('password', password);
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await this.userModel.create({
       email,
@@ -51,7 +50,6 @@ export class AuthService {
         Math.floor(Math.random() * characters.length),
       );
     }
-    console.log('what is the random password ?', password);
     return password;
   }
 
@@ -59,7 +57,6 @@ export class AuthService {
     try {
       const { email, password } = loginDto;
       const user = await this.userModel.findOne({ email: email });
-      console.log(user);
       if (!user || !user.isVerified) {
         return response(err, isError.notRegistered, HttpStatus.UNAUTHORIZED);
       }
@@ -86,7 +83,6 @@ export class AuthService {
   async verify(token: string) {
     try {
       const decodedToken = jwtDecode(token);
-      console.log('-------------------', decodedToken);
       if (
         !decodedToken.hasOwnProperty('email') ||
         !decodedToken.hasOwnProperty('password')
@@ -94,27 +90,19 @@ export class AuthService {
         return response(err, isError.notRegistered, HttpStatus.UNAUTHORIZED);
       }
 
-      console.log(
-        'data-------------------',
-        decodedToken['email'],
-        decodedToken['password'],
-      );
       const user = await this.userModel
         .findOne({
           email: decodedToken['email'],
         })
         .exec();
-      console.log('user==========', user);
 
       if (!user) {
-        console.log('here');
         return response(err, isError.notRegistered, HttpStatus.UNAUTHORIZED);
       }
 
-      const final = await this.userModel
+      await this.userModel
         .findByIdAndUpdate(user._id, { isVerified: true })
         .exec();
-      console.log('final', final.toObject);
       return response(res, isSuccess.verified, HttpStatus.UNAUTHORIZED);
     } catch (e) {
       if (e.name === 'TokenExpiredError') {
@@ -124,29 +112,4 @@ export class AuthService {
       return response(err, isError.fail, HttpStatus.BAD_REQUEST);
     }
   }
-
-  // async verify(token: string): Promise<responseDto> {
-  //   console.log('token ??', token);
-  //   let decodedToken;
-  //   try {
-  //     decodedToken = this.jwtService.verify(token);
-  //     console.log('decoded token', decodedToken);
-  //   } catch (e) {
-  //     return response(err, isError.tokenExpired, HttpStatus.BAD_REQUEST);
-  //   }
-  //   const { email, password } = decodedToken;
-  //   const user = this.userModel.findOne({ email, password }).exec();
-  //   console.log('what comes in the verify token user ?', user);
-  //   if (!user) {
-  //     return response(err, isError.notRegistered, HttpStatus.UNAUTHORIZED);
-  //   }
-  //   await this.userModel
-  //     .findByIdAndUpdate((await user)._id, { isVerified: true })
-  //     .exec();
-
-  //   return {
-  //     message:
-  //       'User verified successfully. You can change your password if needed',
-  //   };
-  // }
 }

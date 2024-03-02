@@ -42,12 +42,9 @@ export class AuthController {
   @Post('/verify-token')
   async verifyToken(@Body() body: { token: string }, @Res() res: Response) {
     try {
-      console.log('Verifying');
       const result = await this.authService.verify(body.token);
-      console.log(result);
       return res.status(result.statusCode).json(result);
     } catch (error) {
-      console.log(error);
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json(

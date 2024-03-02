@@ -47,7 +47,6 @@ export class TaskController {
     @Res() res: Response,
   ) {
     try {
-      console.log('controller: ', user);
       const result = await this.taskService.getTasks(user, params);
       return res.status(result.statusCode).json(result);
     } catch (error) {

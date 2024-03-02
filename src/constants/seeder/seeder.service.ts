@@ -13,14 +13,12 @@ export class SeederService {
 
   async seedAdmin(): Promise<responseDto> {
     const existingAdmin = await this.userModel.findOne().exec();
-    console.log('coming here ? in seeder');
     if (!existingAdmin) {
       const result = await this.userModel.create({
         email: 'admin@gmail.com',
         password: 'admin123',
         role: 'admin',
       });
-      console.log('what comes in result', result);
       return response(res, isSuccess.success, HttpStatus.OK, result);
     }
   }
