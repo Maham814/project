@@ -49,15 +49,24 @@ $ npm install
 Create a .env file in the root directory of the project and set the following environment variables:
 env  
 
-DB TYPE=mongodb
-DB HOST=localhost
-DB PORT=27017
-DB_NAME=task-manager
-DB_CONNECTION=mongodb://localhost:270
-DB SYNCHRONIZE=true
-DB LOGGING=true
-JWT SECRET=kwansoCodeChallenge
-JWT EXPIRES=1d
+DB TYPE=mongodb  
+
+DB HOST=localhost  
+
+DB PORT=27017  
+
+DB_NAME=task-manager  
+
+DB_CONNECTION=mongodb://localhost:270  
+
+DB SYNCHRONIZE=true  
+
+DB LOGGING=true  
+
+JWT SECRET=kwansoCodeChallenge  
+
+JWT EXPIRES=1d  
+
 
 
 ## 4.	Seed the Database
