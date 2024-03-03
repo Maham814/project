@@ -1,17 +1,17 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { User } from '../../auth/schema/user.schema';
-import { res, response, responseDto } from '../response.dto';
+import { res, response } from '../response.dto';
 import { isSuccess } from '../response-messages';
 
 @Injectable()
-export class SeederService {
+export class SeederService implements OnModuleInit {
   constructor(
-    @InjectModel(User.name) private userModel: mongoose.Model<User>,
+    @InjectModel(User.name)
+    private userModel: mongoose.Model<User>,
   ) {}
-
-  async seedAdmin(): Promise<responseDto> {
+  async onModuleInit() {
     const existingAdmin = await this.userModel.findOne().exec();
     if (!existingAdmin) {
       const result = await this.userModel.create({

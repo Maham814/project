@@ -7,8 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import * as dotenv from 'dotenv';
 import { TokenVerificationMiddleware } from './token.middleware';
 import { User, userSchema } from './auth/schema/user.schema';
-// import { SeederService } from './constants/seeder/seeder.service';
-// import { SeederModule } from 'nestjs-seeder';
+import { SeederService } from './constants/seeder/seeder.service';
 
 dotenv.config();
 @Module({
@@ -21,15 +20,12 @@ dotenv.config();
       dbName: process.env.DB_NAME,
     }),
     MongooseModule.forFeature([{ name: User.name, schema: userSchema }]),
-    // SeederModule.forRoot({
-    //   useClass: SeederService,
-    // }),
     TaskModule,
     AuthModule,
   ],
 
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeederService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
