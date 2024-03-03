@@ -47,7 +47,8 @@ $ npm install
 
 ## 3.	Set Environment Variables
 Create a .env file in the root directory of the project and set the following environment variables:
-env
+env  
+
 DB TYPE=mongodb
 DB HOST=localhost
 DB PORT=27017
@@ -81,12 +82,14 @@ All endpoints have been thoroughly tested and are working as expected.
 Note: For any issues or assistance, please contact imaham814@gmail.com.
 
 ## Structure and Modules
-This project is structured into two main modules:
+This project is structured into two main modules:  
+
 1.Auth Module: Handles user authentication, including registration, login, and authorization.
 •	Contains controllers, services, and DTOs related to authentication.
 •	Utilizes middleware for authentication and authorization checks.
 
-Here are the steps for the user sign-up and verification process:
+Here are the steps for the user sign-up and verification process:  
+
 => User Sign-Up
 •	User enters their email and clicks on the sign-up button.
 •	Admin generates a random password for the user.
